@@ -8,6 +8,7 @@ const websocket = require('./ws');
 const teamRoutes = require('./routes/team');
 const taskRoutes = require('./routes/task');
 const activityRoutes = require('./routes/activity');
+const insightsRoutes = require('./routes/insights');
 
 const app = express();
 
@@ -22,6 +23,7 @@ app.use(express.json());
 app.use('/api/teams', teamRoutes);
 app.use('/api/tasks', taskRoutes);
 app.use('/api/activities', activityRoutes);
+app.use('/api/insights', insightsRoutes);
 
 // Health
 app.get('/health', (req, res) => res.json({ status: 'ok' }));
