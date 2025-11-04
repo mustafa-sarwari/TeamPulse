@@ -1,5 +1,8 @@
 const express = require('express');
 const http = require('http');
+const cors = require('cors');
+require('dotenv').config();
+
 const { initFirebase } = require('./firebase');
 const websocket = require('./ws');
 const teamRoutes = require('./routes/team');
@@ -7,6 +10,12 @@ const taskRoutes = require('./routes/task');
 const activityRoutes = require('./routes/activity');
 
 const app = express();
+
+// Middleware
+app.use(cors({
+  origin: process.env.CLIENT_URL || 'http://localhost:3000',
+  credentials: true,
+}));
 app.use(express.json());
 
 // Routes
