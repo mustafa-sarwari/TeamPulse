@@ -1,0 +1,64 @@
+# CI/CD: Deploy backend to Render and frontend to Vercel
+# Triggers on push to main and on manual workflow_dispatch.
+# Requires the following repository secrets to be configured:
+# - RENDER_API_KEY        : Render API key (Service account or API key with deploy permission)
+# - RENDER_SERVICE_ID     : Render service id (the service to trigger a deploy)
+# - VERCEL_TOKEN          : Vercel personal token (with deploy permissions)
+# - VERCEL_ORG_ID         : Your Vercel organization/team ID
+# - VERCEL_PROJECT_ID     : Your Vercel project ID
+
+name: Deploy to Render and Vercel
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  deploy-backend:
+    name: Deploy Backend to Render
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Trigger Render Deploy
+        run: |
+          echo "Triggering Render deployment for service ${{ secrets.RENDER_SERVICE_ID }}"
+          curl -X POST "https://api.render.com/v1/services/${{ secrets.RENDER_SERVICE_ID }}/deploys" \
+            -H "Authorization: Bearer ${{ secrets.RENDER_API_KEY }}" \
+            -H "Content-Type: application/json" \
+            -d '{"clearCache": false}'
+
+      - name: Deployment triggered
+        run: echo "Backend deployment triggered successfully on Render"
+
+  deploy-frontend:
+    name: Deploy Frontend to Vercel
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Install Vercel CLI
+        run: npm install -g vercel
+
+      - name: Deploy to Vercel
+        working-directory: ./client
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+        run: |
+          vercel pull --yes --environment=production --token=$VERCEL_TOKEN
+          vercel build --prod --token=$VERCEL_TOKEN
+          vercel deploy --prebuilt --prod --token=$VERCEL_TOKEN
+
+      - name: Deployment complete
+        run: echo "Frontend deployed successfully to Vercel"
