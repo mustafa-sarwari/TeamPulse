@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { activitiesApi } from '../utils/api';
 import wsClient from '../utils/websocket';
 
-function TeamActivityWidget({ teamId }) {
+function TeamActivityWidget({ teamId = '' }) {
   const [activities, setActivities] = useState([]);
   const [statuses, setStatuses] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -134,7 +134,7 @@ function TeamActivityWidget({ teamId }) {
                     {activity.type === 'task_created' && ' created '}
                     {activity.type === 'status_change' && ` is now ${activity.status}`}
                     {activity.taskTitle && (
-                      <span className="text-gray-600"> "{activity.taskTitle}"</span>
+                      <span className="text-gray-600"> &quot;{activity.taskTitle}&quot;</span>
                     )}
                   </p>
                   <p className="text-xs text-gray-500">{formatTimestamp(activity.timestamp)}</p>

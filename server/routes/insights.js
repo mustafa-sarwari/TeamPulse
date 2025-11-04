@@ -160,8 +160,8 @@ Team Statistics:
 
 Task Distribution:
 ${Object.entries(stats.tasksByMember).map(([member, data]) => 
-  `- ${member}: ${data.completed}/${data.total} completed`
-).join('\n')}
+    `- ${member}: ${data.completed}/${data.total} completed`
+  ).join('\n')}
 
 Provide insights about team performance, workload balance, and actionable recommendations.
   `.trim();

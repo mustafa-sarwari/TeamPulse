@@ -22,7 +22,7 @@ ChartJS.register(
   ArcElement
 );
 
-function TaskCompletionChart({ tasks }) {
+function TaskCompletionChart({ tasks = [] }) {
   // Calculate task statistics
   const completedTasks = tasks.filter(t => t.status === 'completed').length;
   const inProgressTasks = tasks.filter(t => t.status === 'in-progress').length;
