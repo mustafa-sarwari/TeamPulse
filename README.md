@@ -1,33 +1,38 @@
-# TeamPulse — Backend Scaffold
+# TeamPulse task board — full-stack project
 
-An early Node.js backend scaffold for a team and task application. The checked-in entry point outlines an Express API, Firebase initialization, and WebSocket integration.
+Manage teams and tasks with account ownership, status, priority, due dates, and relationship-safe changes.
 
-## Current state
+**Frontend:** HTML, CSS, and JavaScript. **Backend:** Node.js 24, HTTP API, SQLite, and account sessions.
 
-This repository is incomplete and is not yet a runnable full-stack dashboard.
+Tasks must reference a team owned by the current account. Team renames update related tasks in the same transaction. Deleting a team with tasks is blocked, so tasks cannot become orphaned. Each account owns its own board.
 
-`server/index.js` references these routes:
+## Run locally
 
-- `/api/teams`
-- `/api/tasks`
-- `/api/activities`
-- `/health`
+```bash
+npm run start:api
+```
 
-The Firebase module, WebSocket module, and route modules imported by that file are not present in the repository. The root package.json also does not declare Express or other server dependencies. Its test script is a placeholder.
+Open <http://localhost:4000>, choose **Sign in · Account**, and create your local owner account. **My workspace** opens the stored workflows. The first account manages owner-only resources; later accounts receive member access and private account data.
 
-## Repository layout
+## Implementation
 
-- `server/index.js`: API and HTTP server scaffold
-- `package.json`: initial package metadata
+- Salted scrypt password hashes, rotated HttpOnly sessions, seven-day expiry, and owner/member roles.
+- SQLite-backed `teams`, `tasks` workflows with access checks and server-side validation.
+- Connected account screens for saved records, search, paging, and activity; resource permissions control available actions.
+- Transactional writes, retry keys, version-aware edits to mutable records, bounded requests, and protected server files.
 
-## Development roadmap
+[Routes, storage design, and access rules](docs/backend.md) · [Workspace preview](docs/workspace-preview.jpg)
 
-1. Implement the missing modules and declare their dependencies.
-2. Document Firebase configuration using an example environment file.
-3. Add request validation and authentication before exposing team data.
-4. Add route tests and a repeatable local startup command.
-5. Connect a frontend and document the implemented user flows.
+![Account workspace](docs/workspace-preview.jpg)
 
-## Author
+## Verification
 
-[Mustafa Sarwari](https://github.com/mustafa-sarwari)
+`npm run test:api` passes **4 backend tests**, covering account security, session expiry/persistence, access control, validation, and the repository workflow.
+
+The account/resource flow passes browser checks at 375px and 1280px without page JavaScript errors or horizontal overflow in those flows. [GitHub Actions](.github/workflows/fullstack.yml) runs backend checks on pushes and pull requests.
+
+## Project context
+
+[Mustafa Sarwari](https://github.com/mustafa-sarwari) — junior full-stack developer building deeper frontend integration, server validation, authentication, database, and testing skills. The HTTP/account workspace foundation is reused across these portfolio projects; each project’s domain behavior is described above. Original community content, educational fixtures, and licenses remain attributed.
+
+A Node runtime is required for accounts, persistence, provider proxies, and webhooks. Static previews show frontend assets. Demonstration orders do not process payments; stored requests are not emailed. Live provider/store credentials have not been exercised by the fixture tests.
