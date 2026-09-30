@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node server/index.cjs",
+    "test": "node --test server/api.test.cjs"
   },
   "repository": {
     "type": "git",
@@ -17,5 +18,8 @@
   "bugs": {
     "url": "https://github.com/mustafa-sarwari/TeamPulse/issues"
   },
-  "homepage": "https://github.com/mustafa-sarwari/TeamPulse#readme"
+  "homepage": "https://github.com/mustafa-sarwari/TeamPulse#readme",
+  "engines": {
+    "node": ">=24"
+  }
 }

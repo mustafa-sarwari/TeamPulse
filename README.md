@@ -1,33 +1,25 @@
-# TeamPulse — Backend Scaffold
+# Team and task board
 
-An early Node.js backend scaffold for a team and task application. The checked-in entry point outlines an Express API, Firebase initialization, and WebSocket integration.
+Create teams, add tasks, filter by team, change task status, and delete tasks. The frontend uses a Node API with SQLite storage isolated by browser session.
 
-## Current state
+## Run the full-stack demo
 
-This repository is incomplete and is not yet a runnable full-stack dashboard.
+Requires Node.js 24 or newer.
 
-`server/index.js` references these routes:
+```bash
+npm run start:api
+```
 
-- `/api/teams`
-- `/api/tasks`
-- `/api/activities`
-- `/health`
+Open http://localhost:4000. Run `npm run test:api` to check the backend workflow.
 
-The Firebase module, WebSocket module, and route modules imported by that file are not present in the repository. The root package.json also does not declare Express or other server dependencies. Its test script is a placeholder.
+## Implementation and scope
 
-## Repository layout
+- `server/index.cjs` defines API routes and validation.
+- `server/http.cjs` provides the HTTP server, bounded JSON parsing, static-file protection, session cookies, and parameterized SQLite storage.
+- `.data/` contains the local database and is ignored by Git.
 
-- `server/index.js`: API and HTTP server scaffold
-- `package.json`: initial package metadata
+The server binds to loopback. Session cookies separate browser data; they are not user accounts or cross-device login. These are local portfolio demos. Static hosting cannot run the Node API. Production deployment would require account authentication, abuse controls, and deployment configuration. No payment processing or email delivery is implemented.
 
-## Development roadmap
+## Learning context
 
-1. Implement the missing modules and declare their dependencies.
-2. Document Firebase configuration using an example environment file.
-3. Add request validation and authentication before exposing team data.
-4. Add route tests and a repeatable local startup command.
-5. Connect a frontend and document the implemented user flows.
-
-## Author
-
-[Mustafa Sarwari](https://github.com/mustafa-sarwari)
+[Mustafa Sarwari](https://github.com/mustafa-sarwari) — junior full-stack developer building practical frontend and backend skills.
