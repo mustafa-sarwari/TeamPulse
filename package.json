@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "start": "node server/index.cjs",
-    "test": "node --test server/api.test.cjs"
+    "test": "node --test server/api.test.cjs",
+    "start:api": "node server/index.cjs",
+    "test:api": "node --test server/*.test.cjs"
   },
   "repository": {
     "type": "git",

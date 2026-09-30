@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>My workspace</title>
+    <link rel="stylesheet" href="/workspace.css" />
+    <script src="/account.js" defer></script>
+    <script src="/workspace.js" defer></script>
+  </head>
+  <body>
+    <header>
+      <a href="/">← Project</a>
+      <div>
+        <p class="eyebrow">YOUR ACCOUNT</p>
+        <h1 id="title">My workspace</h1>
+      </div>
+      <button id="sign-out" type="button">Sign out</button>
+    </header>
+    <main>
+      <p id="account-status" role="status" aria-live="polite">
+        Loading your workspace…
+      </p>
+      <nav id="resources" aria-label="Workspace views"></nav>
+      <section id="record-section" hidden>
+        <div class="section-heading">
+          <div>
+            <h2 id="resource-title"></h2>
+            <p id="description"></p>
+          </div>
+          <form id="search">
+            <label for="query">Search saved records</label
+            ><input id="query" type="search" /><button>Search</button>
+          </form>
+        </div>
+        <form id="record-form" hidden>
+          <h3>Add a record</h3>
+          <div id="fields"></div>
+          <button type="submit">Save record</button
+          ><button type="button" id="cancel-edit" hidden>Cancel edit</button>
+        </form>
+        <p id="record-status" role="status" aria-live="polite"></p>
+        <div id="records"></div>
+        <div class="pagination">
+          <button id="previous" type="button">Previous</button
+          ><span id="page-info"></span
+          ><button id="next" type="button">Next</button>
+        </div>
+      </section>
+      <section>
+        <h2>Recent activity</h2>
+        <ul id="activity"></ul>
+      </section>
+    </main>
+  </body>
+</html>
